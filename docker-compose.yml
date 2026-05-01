@@ -1,0 +1,15 @@
+services:
+  edu-system:
+    build: .
+    container_name: edu_system_container
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app/EDU_system
+      - db_data:/app/EDU_system
+    restart: always
+
+volumes:
+  db_data:

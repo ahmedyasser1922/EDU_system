@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+    actor Student
+    participant API as Flask API
+    participant Chat as Chat Blueprint
+    participant DB as SQLite/SQLAlchemy
+
+    Student->>API: POST /api/chat/start (student_id, uni_id)
+    API->>Chat: start_chat()
+    Chat->>DB: insert ChatSession
+    DB-->>Chat: chat_id
+    Chat-->>Student: chat session created
+
+    Student->>API: POST /api/chat/message (chat_id, sender_id, content)
+    API->>Chat: send_message()
+    Chat->>DB: insert Message (user text)
+    Chat->>DB: load university + faculties + programs + requirements
+    Chat->>DB: load FAQ entries by uni_id
+    Chat->>Chat: detect intent + score best FAQ similarity
+    Chat->>DB: insert Message (bot reply)
+    Chat-->>Student: smart DB-based response
+
+    Student->>API: GET /api/chat/history/{chat_id}
+    API->>Chat: get_chat_history()
+    Chat->>DB: query all Message records
+    DB-->>Chat: message list
+    Chat-->>Student: chat history JSON

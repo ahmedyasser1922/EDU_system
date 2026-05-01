@@ -1,0 +1,16 @@
+flowchart TD
+    Start([Start]) --> A[Student Login/Register]
+    A --> B[Update Academic Profile + Documents]
+    B --> C[Search Universities]
+    C --> D[Open University Details]
+    D --> E{Need to ask?}
+    E -- No --> J{Apply now?}
+    E -- Yes --> F[Start Chat Session]
+    F --> G[Send Question]
+    G --> H[System matches intent + FAQ]
+    H --> I[Reply from DB data]
+    I --> J
+    J -- No --> C
+    J -- Yes --> K[Submit Application]
+    K --> L[Track Application Status]
+    L --> End([End])

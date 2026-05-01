@@ -1,0 +1,39 @@
+graph TB
+    Student(["Student"])
+    UniRep(["University Rep"])
+    Admin(["Admin"])
+    System(["EDU System Bot"])
+
+    subgraph EDU["EDU System (Implemented)"]
+        UC1["Register / Login"]
+        UC2["Create & Update Academic Profile"]
+        UC3["Upload Documents"]
+        UC4["Search Universities"]
+        UC5["View University Details"]
+        UC6["Start Chat Session"]
+        UC7["Send Message in Chat"]
+        UC8["Get Smart DB Reply (FAQ + University Data)"]
+        UC9["View Chat History"]
+        UC10["Submit Application"]
+        UC11["Track Application Status"]
+        UC12["View Admin Dashboard Stats"]
+        UC13["Manage Universities / Users"]
+    end
+
+    Student --> UC1
+    Student --> UC2
+    Student --> UC3
+    Student --> UC4
+    Student --> UC5
+    Student --> UC6
+    Student --> UC7
+    Student --> UC9
+    Student --> UC10
+    Student --> UC11
+
+    UniRep --> UC7
+    Admin --> UC12
+    Admin --> UC13
+    System --> UC8
+
+    UC7 -.->|"include"| UC8

@@ -1,0 +1,176 @@
+classDiagram
+    class User {
+        +int id
+        +String name
+        +String email
+        +String password_hash
+        +String phone
+        +String role
+        +DateTime created_at
+        +String type
+    }
+
+    class Student {
+        +String school_type
+        +String national_id
+        +Date birth_date
+        +String governorate
+    }
+
+    class PublicSchoolStudent {
+        +float national_exam_score
+        +String exam_year
+        +String track
+    }
+
+    class AmericanSchoolStudent {
+        +int sat_score
+        +int act_score
+        +double gpa
+        +int toefl_score
+    }
+
+    class PrivateSchoolStudent {
+        +String curriculum
+        +double ib_score
+        +String igcse_grades
+        +String a_level_grades
+    }
+
+    class UniversityRep {
+        +int uni_id
+        +String position
+    }
+
+    class Admin {
+    }
+
+    class AcademicProfile {
+        +int id
+        +int student_id
+        +String school_type
+        +JSON grades
+        +DateTime last_updated
+    }
+
+    class Document {
+        +int id
+        +int profile_id
+        +int application_id
+        +String type
+        +String file_path
+        +DateTime upload_date
+        +String status
+    }
+
+    class University {
+        +int id
+        +String name
+        +String type
+        +String location
+        +String city
+        +String country
+        +String website
+        +double min_tuition_fees
+        +double max_tuition_fees
+        +String description
+        +JSON accepted_curriculums
+        +String scholarships
+        +String facilities
+        +String contact_email
+        +String contact_phone
+        +String accreditation
+        +String housing
+        +int founded_year
+    }
+
+    class Faculty {
+        +int id
+        +int uni_id
+        +String name
+        +double fees
+        +String duration
+    }
+
+    class Program {
+        +int id
+        +int faculty_id
+        +String name
+        +String degree
+        +int duration_years
+        +double min_grade_required
+        +String language
+    }
+
+    class AdmissionRequirement {
+        +int id
+        +int uni_id
+        +String school_type
+        +double min_score
+        +JSON required_docs
+        +String additional_criteria
+    }
+
+    class ChatSession {
+        +int id
+        +int student_id
+        +int uni_rep_id
+        +int uni_id
+        +DateTime started_at
+        +String status
+    }
+
+    class Message {
+        +int id
+        +int session_id
+        +int sender_id
+        +String content
+        +String type
+        +DateTime sent_at
+        +bool isRead
+    }
+
+    class FAQEntry {
+        +int id
+        +int uni_id
+        +String question
+        +String answer
+        +String category
+    }
+
+    class Application {
+        +int id
+        +int student_id
+        +int uni_id
+        +int program_id
+        +DateTime submitted_at
+        +String status
+        +String notes
+    }
+
+    User <|-- Student
+    User <|-- UniversityRep
+    User <|-- Admin
+    Student <|-- PublicSchoolStudent
+    Student <|-- AmericanSchoolStudent
+    Student <|-- PrivateSchoolStudent
+
+    Student "1" --> "1" AcademicProfile
+    AcademicProfile "1" --> "0..*" Document
+    Student "1" --> "0..*" ChatSession
+    Student "1" --> "0..*" Application
+
+    University "1" --> "0..*" Faculty
+    Faculty "1" --> "0..*" Program
+    University "1" --> "0..*" AdmissionRequirement
+    University "1" --> "0..*" FAQEntry
+
+    ChatSession "1" --> "0..*" Message
+    ChatSession "*" --> "1" University
+    ChatSession "*" --> "1" Student
+    ChatSession "*" --> "0..1" UniversityRep
+
+    Application "*" --> "1" Student
+    Application "*" --> "1" University
+    Application "*" --> "1" Program
+    Application "1" --> "0..*" Document
